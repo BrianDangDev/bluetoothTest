@@ -30,7 +30,8 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await requestPermission(bluetoothPermission);
-      if (await getPermissionStatus(bluetoothPermission)) {
+      _model.bluetoothEnabled = await actions.isBluetoothEnabled();
+      if (_model.bluetoothEnabled!) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -59,7 +60,6 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
         return;
       }
 
-      _model.bluetoothEnabled = await actions.isBluetoothEnabled();
       if (Navigator.of(context).canPop()) {
         context.pop();
       }
