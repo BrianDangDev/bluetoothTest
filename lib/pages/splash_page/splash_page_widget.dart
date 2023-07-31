@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
@@ -106,6 +107,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
                 child: Container(
@@ -114,12 +116,145 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
-                  child: Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
-                    child: Text(
-                      'Fetching bluetooth status...',
-                      style: FlutterFlowTheme.of(context).labelMedium,
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Text(
+                          'Fetching bluetooth status...',
+                          style: FlutterFlowTheme.of(context).labelMedium,
+                        ),
+                      ),
+                      FFButtonWidget(
+                        onPressed: () async {
+                          var _shouldSetState = false;
+                          await requestPermission(bluetoothPermission);
+                          _model.bluetoothEnabledCopy =
+                              await actions.isBluetoothEnabled();
+                          _shouldSetState = true;
+                          if (_model.bluetoothEnabled!) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Permission granted',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Permission denied',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
+
+                          if (Navigator.of(context).canPop()) {
+                            context.pop();
+                          }
+                          context.pushNamed(
+                            'HomePage',
+                            queryParameters: {
+                              'isBTEnabled': serializeParam(
+                                _model.bluetoothEnabled,
+                                ParamType.bool,
+                              ),
+                            }.withoutNulls,
+                          );
+
+                          if (_shouldSetState) setState(() {});
+                        },
+                        text: 'Button',
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      FFButtonWidget(
+                        onPressed: () async {
+                          await requestPermission(notificationsPermission);
+                        },
+                        text: 'Button',
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      FFButtonWidget(
+                        onPressed: () async {
+                          await requestPermission(locationPermission);
+                        },
+                        text: 'Button',
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

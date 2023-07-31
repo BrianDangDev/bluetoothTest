@@ -10,6 +10,8 @@ const kPermissionStateToBool = {
 };
 
 final bluetoothPermission = Permission.bluetooth;
+final locationPermission = Permission.location;
+final notificationsPermission = Permission.notification;
 
 Future<bool> getPermissionStatus(Permission setting) async {
   if (kIsWeb) {
