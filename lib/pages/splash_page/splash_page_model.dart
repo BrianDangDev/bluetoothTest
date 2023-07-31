@@ -17,6 +17,8 @@ class SplashPageModel extends FlutterFlowModel {
   bool? bluetoothEnabled;
   // Stores action output result for [Custom Action - isBluetoothEnabled] action in Button widget.
   bool? bluetoothEnabledCopy;
+  // Stores action output result for [Custom Action - bluetoothPermission] action in Button widget.
+  bool? bluetootOut;
 
   /// Initialization and disposal methods.
 

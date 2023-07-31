@@ -127,18 +127,19 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
                           style: FlutterFlowTheme.of(context).labelMedium,
                         ),
                       ),
-                      FFButtonWidget(
-                        onPressed: () async {
-                          var _shouldSetState = false;
-                          await requestPermission(bluetoothPermission);
-                          _model.bluetoothEnabledCopy =
-                              await actions.isBluetoothEnabled();
-                          _shouldSetState = true;
-                          if (_model.bluetoothEnabled!) {
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onDoubleTap: () async {
+                          _model.bluetootOut =
+                              await actions.bluetoothPermission();
+                          if (_model.bluetootOut!) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Permission granted',
+                                  'yes sir',
                                   style: TextStyle(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
@@ -153,55 +154,97 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Permission denied',
+                                  'huhu',
                                   style: TextStyle(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                   ),
                                 ),
                                 duration: Duration(milliseconds: 4000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).secondary,
+                                backgroundColor: Color(0xFFFF1A1A),
                               ),
                             );
-                            if (_shouldSetState) setState(() {});
-                            return;
                           }
 
-                          if (Navigator.of(context).canPop()) {
-                            context.pop();
-                          }
-                          context.pushNamed(
-                            'HomePage',
-                            queryParameters: {
-                              'isBTEnabled': serializeParam(
-                                _model.bluetoothEnabled,
-                                ParamType.bool,
-                              ),
-                            }.withoutNulls,
-                          );
-
-                          if (_shouldSetState) setState(() {});
+                          setState(() {});
                         },
-                        text: 'Button',
-                        options: FFButtonOptions(
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            var _shouldSetState = false;
+                            await requestPermission(bluetoothPermission);
+                            _model.bluetoothEnabledCopy =
+                                await actions.isBluetoothEnabled();
+                            _shouldSetState = true;
+                            if (_model.bluetoothEnabled!) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Permission granted',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
                                   ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Permission denied',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
+                              );
+                              if (_shouldSetState) setState(() {});
+                              return;
+                            }
+
+                            if (Navigator.of(context).canPop()) {
+                              context.pop();
+                            }
+                            context.pushNamed(
+                              'HomePage',
+                              queryParameters: {
+                                'isBTEnabled': serializeParam(
+                                  _model.bluetoothEnabled,
+                                  ParamType.bool,
+                                ),
+                              }.withoutNulls,
+                            );
+
+                            if (_shouldSetState) setState(() {});
+                          },
+                          text: 'Button',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       FFButtonWidget(
