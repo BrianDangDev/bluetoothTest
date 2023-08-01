@@ -1,4 +1,4 @@
-# BLuetooth
+# Bluetooth
 
 A new Flutter project.
 
